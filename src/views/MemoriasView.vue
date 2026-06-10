@@ -66,24 +66,38 @@
             creación de obra digital interactiva.
           </p>
           <h2 class="popup-h2">Objetivos específicos</h2>
-          <div class="row align-items-center m-0 p-0">
-            <div class="col-lg-2 m-0 p-0"> <img  :src="`${baseUrl}images/Re1.png`"
+          <div class="row  my-4 p-0">
+            <div class="col-lg-2 m-0 p-0 iconovineta"> <img  :src="`${baseUrl}images/Re1.png`"
             alt="vineta" class="img-fluid" width="50" height="50" ></div>
-          <div class="col-lg-10"><p class="popup-text">
+          <div class="col-lg-10 m-0 px-3"><p class="popup-text">
             Interpretar el concepto de simbiosis asociado a los líquenes para la generación
             de recursos simbólicos que representen relaciones de interdependencia y conexión.
           </p></div>
           </div>
-          
-         
-          <p class="popup-text">
+          <div class="row  my-4 p-0">
+            <div class="col-lg-2 m-0 p-0 iconovineta"> <img  :src="`${baseUrl}images/Re2.png`"
+            alt="vineta" class="img-fluid" width="50" height="50" ></div>
+          <div class="col-lg-10 m-0 px-3"><p class="popup-text">
             Explorar a través de la experimentación representaciones visuales que evoquen
             interrelaciones simbióticas empleando los líquenes como caso de estudio.
-          </p>
-          <p class="popup-text">
+          </p></div>
+          </div>
+          <div class="row  my-4 p-0">
+            <div class="col-lg-2 m-0 p-0 iconovineta"> <img  :src="`${baseUrl}images/Re3.png`"
+            alt="vineta" class="img-fluid" width="50" height="50" ></div>
+          <div class="col-lg-10 m-0 px-3"><p class="popup-text">
             Crear una obra digital que integre los recursos simbólicos de los líquenes como
             propuesta de interpretación visual.
+          </p></div>
+          </div>
+          
+         
+          <!-- <p class="popup-text">
+            
           </p>
+          <p class="popup-text">
+           
+          </p> -->
         </template>
 
         <template v-if="activePopup === 'metodologia'">
@@ -333,5 +347,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 .popup-leave-to {
   opacity: 0;
   transform: translateX(24px);
+}
+
+.iconovineta{
+  width: 50px;
+  height: 50px;
 }
 </style>
