@@ -19,7 +19,7 @@
       <div class="hotspot-ring"></div>
       <div class="hotspot-dot"></div>
       <div class="hotspot-label label-right">
-        <span class="label-arrow muted">◄◄</span>
+        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 238" width="14" height="14"><path fill="var(--color-lime)" d="M 118.5 1 L 1 119.5 L 119 236.5 Z"/></svg>
         <span class="label-text">Memorias</span>
       </div>
     </RouterLink>
@@ -29,7 +29,7 @@
       <div class="hotspot-ring"></div>
       <div class="hotspot-dot"></div>
       <div class="hotspot-label label-right">
-        <span class="label-arrow muted">◄◄</span>
+        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 238" width="14" height="14"><path fill="var(--color-lime)" d="M 118.5 1 L 1 119.5 L 119 236.5 Z"/></svg>
         <span class="label-text">Simbiosis</span>
       </div>
     </RouterLink>
@@ -40,7 +40,7 @@
       <div class="hotspot-dot"></div>
       <div class="hotspot-label label-left">
         <span class="label-text">Cartografías</span>
-        <span class="label-arrow muted">▶▶</span>
+        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 239" width="14" height="14"><path fill="var(--color-lime)" d="M 1.5 2 L 119 119.5 L 1.5 237 Z"/></svg>
       </div>
     </RouterLink>
 
@@ -49,7 +49,7 @@
       <div class="hotspot-ring"></div>
       <div class="hotspot-dot"></div>
       <div class="hotspot-label label-right">
-        <span class="label-arrow muted">◄◄</span>
+        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 238" width="14" height="14"><path fill="var(--color-lime)" d="M 118.5 1 L 1 119.5 L 119 236.5 Z"/></svg>
         <span class="label-text">Conexiones</span>
       </div>
     </RouterLink>
@@ -221,6 +221,10 @@ function toggleAudio() {
   font-weight: 500;
   color: var(--color-dark);
   letter-spacing: 0.02em;
+}
+.arrow-icon {
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 3px rgba(176, 255, 85, 0.9)) drop-shadow(0 0 1px rgba(0,0,0,0.3));
 }
 .label-arrow        { font-size: 0.85rem; line-height: 1; }
 .label-arrow.lime   { color: var(--color-lime); }

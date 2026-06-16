@@ -103,7 +103,7 @@
         <template v-if="activePopup === 'metodologia'">
           <h2 class="popup-h1">Metodología</h2>
           <img
-            :src="`${baseUrl}images/memorias/metodologia.png`"
+            :src="`${baseUrl}images/memorias/metodologia.webp`"
             alt="Metodología"
             class="popup-infographic img-fluid" width="100%"
           />

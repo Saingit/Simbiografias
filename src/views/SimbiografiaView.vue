@@ -14,7 +14,7 @@
       </RouterLink>
 
       <div class="simbiografia-heading">
-        <h1 id="simbiografia-title">Simbiosis</h1>
+        <h1 class="simbiografia-title">Simbiosis</h1>
         <h3>Líquenes</h3>
       </div>
 
@@ -152,16 +152,28 @@ const photos = [
   filter: brightness(0) invert(1);
 }
 
+
 .simbiografia-heading {
   position: absolute;
   z-index: 2;
-  top: clamp(4.35rem, 4.1vw, 5.25rem);
+  top: clamp(2rem, 2vw, 3.25rem);
   left: clamp(12rem, 14.7vw, 18rem);
   color: var(--color-cream);
 }
+
 .simbiografia-heading h1 {
   color: var(--color-lime);
+  font-size: clamp(2.5rem, 2.5vw, 5.1rem);
+  font-weight: 300;
+  line-height: 0.98;
+  margin: 0 0 0.35rem;
+}
 
+.simbiografia-heading p {
+  font-size: clamp(2rem, 2.35vw, 3rem);
+  font-weight: 300;
+  line-height: 1;
+  margin: 0;
 }
 
 

@@ -1,4 +1,5 @@
 <template>
+  
   <NavBar v-if="!route.meta.hideNav" />
   <RouterView />
 </template>
