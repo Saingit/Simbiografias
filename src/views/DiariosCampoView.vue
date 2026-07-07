@@ -2,6 +2,8 @@
   <main
     class="min-vh-100"
     :style="`padding-top: 5rem; background-image: url('${baseUrl}images/fondo.png'); background-size: cover; background-attachment: fixed;`"
+    role="main"
+    aria-label="Diarios de campo"
   >
 
     <!-- Header -->
@@ -13,20 +15,24 @@
     </section>
 
     <!-- Galería curved-path -->
-    <section class="d-flex flex-column align-items-center" style="padding-bottom: 8rem;">
-      <div class="curved-gallery">
+    <section class="d-flex flex-column align-items-center" style="padding-bottom: 8rem;" aria-label="Galería de diarios de campo">
+      <div class="curved-gallery" role="list">
         <img
           v-for="(img, i) in images"
           :key="i"
           :src="img.src"
           :alt="img.alt"
+          role="listitem"
+          tabindex="0"
           @click="openLightbox(i)"
+          @keydown.enter="openLightbox(i)"
+          @keydown.space.prevent="openLightbox(i)"
         />
       </div>
 
       <!-- Leyenda -->
-      <div class="d-flex gap-4 mt-5 text-uppercase" style="color: rgba(20,32,33,0.4); font-size: 0.7rem; letter-spacing: 0.15em;">
-        <span v-for="(img, i) in images" :key="i">{{ img.label }}</span>
+      <div class="d-flex gap-4 mt-5 text-uppercase" style="color: rgba(20,32,33,0.4); font-size: 0.7rem; letter-spacing: 0.15em;" role="list" aria-label="Leyenda de imágenes">
+        <span v-for="(img, i) in images" :key="i" role="listitem">{{ img.label }}</span>
       </div>
     </section>
 
@@ -37,6 +43,12 @@
         class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-4"
         style="z-index: 1050; background: rgba(20,32,33,0.95); backdrop-filter: blur(4px);"
         @click.self="lightboxIndex = null"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="`Visor de imagen: ${images[lightboxIndex].label}`"
+        @keydown.escape="lightboxIndex = null"
+        @keydown.left="prevImage"
+        @keydown.right="nextImage"
       >
         <div class="position-relative w-100" style="max-width: 56rem;">
           <img
@@ -56,8 +68,9 @@
             @click="lightboxIndex = null"
             class="position-absolute rounded-circle d-flex align-items-center justify-content-center lightbox-btn"
             style="top: -1rem; right: -1rem; width: 2.25rem; height: 2.25rem; background: var(--color-dark); border: 1px solid rgba(107,121,97,0.4);"
+            aria-label="Cerrar visor de imagen"
           >
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
@@ -68,8 +81,9 @@
             @click="lightboxIndex--"
             class="position-absolute rounded-circle d-flex align-items-center justify-content-center lightbox-btn"
             style="left: 0; top: 50%; transform: translate(-3rem, -50%); width: 2.25rem; height: 2.25rem; background: var(--color-dark); border: 1px solid rgba(107,121,97,0.4);"
+            aria-label="Imagen anterior"
           >
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
           </button>
@@ -80,8 +94,9 @@
             @click="lightboxIndex++"
             class="position-absolute rounded-circle d-flex align-items-center justify-content-center lightbox-btn"
             style="right: 0; top: 50%; transform: translate(3rem, -50%); width: 2.25rem; height: 2.25rem; background: var(--color-dark); border: 1px solid rgba(107,121,97,0.4);"
+            aria-label="Imagen siguiente"
           >
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
           </button>
@@ -93,10 +108,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-const baseUrl = import.meta.env.BASE_URL
+import { useLightbox } from '../composables/useLightbox'
 
-const lightboxIndex = ref(null)
+const baseUrl = import.meta.env.BASE_URL
 
 const images = [
   { src: `${import.meta.env.BASE_URL}images/diarios/diario-01.png`, alt: 'Diario de campo 01', label: 'Registro 01' },
@@ -104,7 +118,18 @@ const images = [
   { src: `${import.meta.env.BASE_URL}images/diarios/diario-03.png`, alt: 'Diario de campo 03', label: 'Registro 03' },
 ]
 
-function openLightbox(i) { lightboxIndex.value = i }
+const { 
+  currentIndex: lightboxIndex, 
+  currentImage,
+  isOpen,
+  hasPrev,
+  hasNext,
+  progress,
+  open: openLightbox, 
+  close: closeLightbox,
+  prev: prevImage,
+  next: nextImage
+} = useLightbox(images)
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <main class="simbiografia-view">
+  <main class="simbiografia-view" role="main" aria-label="Simbiosis - Líquenes">
     <section
       class="simbiografia-canvas"
       :style="{ backgroundImage: `url('${baseUrl}images/MarcoVerde_grafico.png')` }"
@@ -9,7 +9,8 @@
         <img
           class="simbiografia-logo"
           :src="`${baseUrl}images/logo/Recurso 8@4x.png`"
-          alt="Simbiografías"
+          alt=""
+          aria-hidden="true"
         >
       </RouterLink>
 
@@ -18,19 +19,29 @@
         <h3>Líquenes</h3>
       </div>
 
-      <a class="feature-pill feature-pill--photos" href="#fotografias" @click.prevent="scrollTo('fotografias')">
+      <a 
+        class="feature-pill feature-pill--photos" 
+        href="#fotografias" 
+        @click.prevent="scrollTo('fotografias')"
+        aria-label="Ir a galería de fotografías"
+      >
         Fotografías
       </a>
-      <RouterLink class="feature-pill feature-pill--model" to="/liquenes">
+      <RouterLink class="feature-pill feature-pill--model" to="/liquenes" aria-label="Ver modelos 3D">
         3D
       </RouterLink>
-      <a class="feature-pill feature-pill--videos" href="#videos" @click.prevent="scrollTo('videos')">
+      <a 
+        class="feature-pill feature-pill--videos" 
+        href="#videos" 
+        @click.prevent="scrollTo('videos')"
+        aria-label="Ir a sección de videos"
+      >
         Videos
       </a>
     </section>
 
     <!-- ── Galería de fotografías ── -->
-    <section id="fotografias" class="foto-section mt-5 pt-5">
+    <section id="fotografias" class="foto-section mt-5 pt-5" aria-label="Galería de fotografías de líquenes">
       <div class="foto-grid">
 
         <!-- Cards con posición explícita — deben ir primero en el DOM -->
@@ -44,7 +55,7 @@
           <span class="sw sw--3">SIM<span class="sw-dim">BIOSIS</span></span>
           <span class="sw sw--4">SIMBIOSIS</span>
           <span class="sw sw--5">SIMBIOSIS</span>
-          <div class="simbiosis-blob"></div>
+          <div class="simbiosis-blob" aria-hidden="true"></div>
         </div>
 
         <div class="foto-card foto-card--que-es">
@@ -68,7 +79,7 @@
         </div>
 
         <div class="foto-card foto-card--lichen-graphic">
-          <img :src="`${baseUrl}images/fotografias/47.jpg`" class="lichen-overlay" alt="" />
+          <img :src="`${baseUrl}images/fotografias/47.jpg`" class="lichen-overlay" alt="Gráfico de liquen" loading="lazy" />
         </div>
 
         <div class="foto-card foto-card--coexistencia">
@@ -76,10 +87,10 @@
         </div>
 
         <!-- Fotos auto-placed -->
-        <div v-for="photo in photos" :key="photo" class="foto-item">
+        <div v-for="(photo, index) in photos" :key="photo" class="foto-item">
           <img
             :src="`${baseUrl}images/fotografias/${photo}.jpg`"
-            :alt="`Fotografía de liquen ${photo}`"
+            :alt="`Fotografía de líquen ${index + 1} de ${photos.length}`"
             loading="lazy"
           />
         </div>
@@ -95,7 +106,11 @@ import { RouterLink } from 'vue-router'
 const baseUrl = import.meta.env.BASE_URL
 
 function scrollTo(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  const element = document.getElementById(id)
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' })
+    element.focus()
+  }
 }
 
 const photos = [

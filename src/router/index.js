@@ -1,20 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView         from '../views/HomeView.vue'
-import DiariosCampoView from '../views/DiariosCampoView.vue'
-import MemoriasView     from '../views/MemoriasView.vue'
-import SimbiografiaView from '../views/SimbiografiaView.vue'
-import CartografiasView from '../views/CartografiasView.vue'
-import ConexionesView   from '../views/ConexionesView.vue'
-import LiquenView       from '../views/LiquenView.vue'
 
 const routes = [
-  { path: '/',            name: 'home',         component: HomeView },
-  { path: '/diarios',     name: 'diarios',      component: DiariosCampoView },
-  { path: '/memorias',    name: 'memorias',     component: MemoriasView,  meta: { hideNav: true } },
-  { path: '/simbiosis',   name: 'simbiosis',    component: SimbiografiaView, meta: { hideNav: true } },
-  { path: '/cartografias',name: 'cartografias', component: CartografiasView },
-  { path: '/conexiones',  name: 'conexiones',   component: ConexionesView },
-  { path: '/liquenes',    name: 'liquenes',     component: LiquenView,    meta: { hideNav: true } },
+  { path: '/',            name: 'home',         component: () => import('../views/HomeView.vue') },
+  { path: '/diarios',     name: 'diarios',      component: () => import('../views/DiariosCampoView.vue') },
+  { path: '/memorias',    name: 'memorias',     component: () => import('../views/MemoriasView.vue'),  meta: { hideNav: true } },
+  { path: '/simbiosis',   name: 'simbiosis',    component: () => import('../views/SimbiografiaView.vue'), meta: { hideNav: true } },
+  { path: '/cartografias',name: 'cartografias', component: () => import('../views/CartografiasView.vue') },
+  { path: '/conexiones',  name: 'conexiones',   component: () => import('../views/ConexionesView.vue') },
+  { path: '/liquenes',    name: 'liquenes',     component: () => import('../views/LiquenView.vue'),    meta: { hideNav: true } },
 ]
 
 export default createRouter({

@@ -2,54 +2,79 @@
   <main
     class="home-stage"
     :style="`background-image: url('${baseUrl}images/fondo.png'); background-size: cover; background-position: center;`"
+    role="main"
+    aria-label="Página de inicio de Simbiografías"
   >
 
-   <!-- Audio ambiental -->
-    <audio ref="audioEl" :src="audioSrc" loop preload="auto"></audio>
-
     <!-- Control de audio -->
-    <button class="audio-toggle" @click="toggleAudio" :class="{ active: !isMuted }">
-      <span class="audio-icon">{{ isMuted ? '♪' : '♫' }}</span>
+    <button 
+      class="audio-toggle" 
+      @click="toggleMute" 
+      :class="{ active: !isMuted }"
+      :aria-label="isMuted ? 'Activar sonido ambiental' : 'Silenciar sonido ambiental'"
+      :aria-pressed="!isMuted"
+    >
+      <span class="audio-icon" aria-hidden="true">{{ isMuted ? '♪' : '♫' }}</span>
       <span class="audio-label">{{ isMuted ? 'Activar sonido' : 'Silenciar' }}</span>
-      <span v-if="isMuted" class="audio-hint">· mejor experiencia</span>
+      <span v-if="isMuted" class="audio-hint" aria-hidden="true">· mejor experiencia</span>
     </button>
 
     <!-- Hotspot: Memorias (arriba derecha del modelo) -->
-    <RouterLink class="hotspot-group" style="left:51%;top:26%;" to="/memorias">
-      <div class="hotspot-ring"></div>
-      <div class="hotspot-dot"></div>
+    <RouterLink 
+      class="hotspot-group" 
+      style="left:51%;top:26%;" 
+      to="/memorias"
+      aria-label="Explorar Memorias"
+    >
+      <div class="hotspot-ring" aria-hidden="true"></div>
+      <div class="hotspot-dot" aria-hidden="true"></div>
       <div class="hotspot-label label-right">
-        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 238" width="14" height="14"><path fill="var(--color-lime)" d="M 118.5 1 L 1 119.5 L 119 236.5 Z"/></svg>
+        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 238" width="14" height="14" aria-hidden="true"><path fill="var(--color-lime)" d="M 118.5 1 L 1 119.5 L 119 236.5 Z"/></svg>
         <span class="label-text">Memorias</span>
       </div>
     </RouterLink>
 
     <!-- Hotspot: Simbiosis (lado derecho del modelo) -->
-    <RouterLink class="hotspot-group" style="left:63%;top:44%;" to="/simbiosis">
-      <div class="hotspot-ring"></div>
-      <div class="hotspot-dot"></div>
+    <RouterLink 
+      class="hotspot-group" 
+      style="left:63%;top:44%;" 
+      to="/simbiosis"
+      aria-label="Explorar Simbiosis"
+    >
+      <div class="hotspot-ring" aria-hidden="true"></div>
+      <div class="hotspot-dot" aria-hidden="true"></div>
       <div class="hotspot-label label-right">
-        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 238" width="14" height="14"><path fill="var(--color-lime)" d="M 118.5 1 L 1 119.5 L 119 236.5 Z"/></svg>
+        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 238" width="14" height="14" aria-hidden="true"><path fill="var(--color-lime)" d="M 118.5 1 L 1 119.5 L 119 236.5 Z"/></svg>
         <span class="label-text">Simbiosis</span>
       </div>
     </RouterLink>
 
     <!-- Hotspot: Cartografías (lado izquierdo del modelo) -->
-    <RouterLink class="hotspot-group" style="left:39%;top:57%;" to="/cartografias">
-      <div class="hotspot-ring"></div>
-      <div class="hotspot-dot"></div>
+    <RouterLink 
+      class="hotspot-group" 
+      style="left:39%;top:57%;" 
+      to="/cartografias"
+      aria-label="Explorar Cartografías"
+    >
+      <div class="hotspot-ring" aria-hidden="true"></div>
+      <div class="hotspot-dot" aria-hidden="true"></div>
       <div class="hotspot-label label-left">
         <span class="label-text">Cartografías</span>
-        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 239" width="14" height="14"><path fill="var(--color-lime)" d="M 1.5 2 L 119 119.5 L 1.5 237 Z"/></svg>
+        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 239" width="14" height="14" aria-hidden="true"><path fill="var(--color-lime)" d="M 1.5 2 L 119 119.5 L 1.5 237 Z"/></svg>
       </div>
     </RouterLink>
 
     <!-- Hotspot: Conexiones (parte inferior del modelo) -->
-    <RouterLink class="hotspot-group" style="left:56%;top:65%;" to="/conexiones">
-      <div class="hotspot-ring"></div>
-      <div class="hotspot-dot"></div>
+    <RouterLink 
+      class="hotspot-group" 
+      style="left:56%;top:65%;" 
+      to="/conexiones"
+      aria-label="Explorar Conexiones"
+    >
+      <div class="hotspot-ring" aria-hidden="true"></div>
+      <div class="hotspot-dot" aria-hidden="true"></div>
       <div class="hotspot-label label-right">
-        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 238" width="14" height="14"><path fill="var(--color-lime)" d="M 118.5 1 L 1 119.5 L 119 236.5 Z"/></svg>
+        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 238" width="14" height="14" aria-hidden="true"><path fill="var(--color-lime)" d="M 118.5 1 L 1 119.5 L 119 236.5 Z"/></svg>
         <span class="label-text">Conexiones</span>
       </div>
     </RouterLink>
@@ -57,14 +82,14 @@
    
 
     <!-- CTA -->
-    <p class="home-cta text-left mt-5
-    ">Explora los puntos activos en el Liquen</p>
+    <p class="home-cta text-left mt-5" aria-hidden="true">Explora los puntos activos en el Liquen</p>
 
     <!-- Visor 3D centrado -->
-    <div class="model-wrap">
+    <div class="model-wrap" role="img" aria-label="Modelo 3D interactivo de un liquen">
+      <ModelLoader :progress="progress" :isLoaded="isLoaded" />
       <model-viewer
         :src="mainModel"
-        alt="Simbiografías"
+        alt="Modelo 3D interactivo de un liquen para explorar"
         camera-controls
         auto-rotate
         auto-rotate-delay="3000"
@@ -73,6 +98,10 @@
         shadow-intensity="0"
         exposure="1.1"
         style="width:100%;height:100%;background:transparent;"
+        @progress="onProgress"
+        @load="onLoad"
+        @error="onError"
+        aria-label="Visor 3D interactivo"
       />
     </div>
 
@@ -80,16 +109,21 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import ModelLoader from '../components/ModelLoader.vue'
+import { useModelLoader } from '../composables/useModelLoader'
+import { useAudio } from '../composables/useAudio'
+
 const baseUrl = import.meta.env.BASE_URL
 
 import liquen1Model from '@/assets/modelos 3d/liquen1.glb?url'
-import audioSrc from '@/assets/audio/sonoro.opus?url'
+import audioFile from '@/assets/audio/sonoro.opus?url'
 
 const mainModel = liquen1Model
-const audioEl = ref(null)
-const isMuted = ref(true)
+
+const { progress, isLoaded, onProgress, onLoad, onError } = useModelLoader()
+const { isMuted, toggleMute, init: initAudio, play: playAudio } = useAudio(audioFile)
 
 onMounted(() => {
   if (!customElements.get('model-viewer')) {
@@ -98,29 +132,10 @@ onMounted(() => {
     script.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js'
     document.head.appendChild(script)
   }
-
-  const audio = audioEl.value
-  if (!audio) return
-  console.log('[audio] src:', audioSrc)
-  audio.muted = true
-  audio.volume = 1.0
-  audio.play()
-    .then(() => console.log('[audio] autoplay OK (muted)'))
-    .catch(err => console.warn('[audio] autoplay blocked:', err.message))
+  
+  initAudio()
+  playAudio()
 })
-
-function toggleAudio() {
-  const audio = audioEl.value
-  if (!audio) return
-  isMuted.value = !isMuted.value
-  audio.muted = isMuted.value
-  if (!isMuted.value) {
-    console.log('[audio] unmuting, readyState:', audio.readyState, 'paused:', audio.paused)
-    audio.play()
-      .then(() => console.log('[audio] play OK'))
-      .catch(err => console.error('[audio] play failed:', err.message))
-  }
-}
 </script>
 
 <style scoped>

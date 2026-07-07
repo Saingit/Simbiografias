@@ -1,9 +1,9 @@
 <template>
-  <main class="liquen-page" :style="bgStyle">
+  <main class="liquen-page" :style="bgStyle" role="main" aria-label="Visor de modelos 3D de líquenes">
 
     <!-- Logo: volver al inicio -->
-    <RouterLink to="/simbiosis" class="liquen-logo-wrap">
-      <img :src="`${baseUrl}images/logo/Recurso 5@4x.png`" alt="Simbiografías" class="liquen-logo" />
+    <RouterLink to="/simbiosis" class="liquen-logo-wrap" aria-label="Volver a Simbiosis">
+      <img :src="`${baseUrl}images/logo/Recurso 5@4x.png`" alt="" class="liquen-logo" aria-hidden="true" />
     </RouterLink>
 
     <!-- Título -->
@@ -16,24 +16,40 @@
     <div class="liquen-content mt-5">
 
       <!-- Tabs -->
-      <ul class="liquen-tabs">
+      <ul class="liquen-tabs" role="tablist" aria-label="Seleccionar modelo de líquen">
         <li
           v-for="(lichen, i) in lichens"
           :key="lichen.id"
           class="liquen-tab"
           :class="{ 'liquen-tab--active': activeIdx === i }"
-          @click="activeIdx = i"
+          role="tab"
+          :id="`tab-${lichen.id}`"
+          :aria-selected="activeIdx === i"
+          :aria-controls="`panel-${lichen.id}`"
+          tabindex="0"
+          @click="onTabClick(i)"
+          @keydown.enter="onTabClick(i)"
+          @keydown.space.prevent="onTabClick(i)"
+          @keydown.arrow-right="i < lichens.length - 1 && onTabClick(i + 1)"
+          @keydown.arrow-left="i > 0 && onTabClick(i - 1)"
         >
           {{ lichen.name }}
         </li>
       </ul>
 
       <!-- Visor 3D -->
-      <div class="viewer-wrap">
+      <div 
+        class="viewer-wrap" 
+        role="tabpanel"
+        :id="`panel-${activeLichen.id}`"
+        :aria-labelledby="`tab-${activeLichen.id}`"
+        aria-label="Visor 3D interactivo"
+      >
+        <ModelLoader :progress="progress" :isLoaded="isLoaded" />
         <model-viewer
           :key="activeLichen.file"
           :src="modelSrc"
-          :alt="activeLichen.name"
+          :alt="`Modelo 3D de ${activeLichen.name} - ${activeLichen.scientific}`"
           camera-controls
           auto-rotate
           auto-rotate-delay="800"
@@ -42,13 +58,17 @@
           shadow-intensity="0.6"
           exposure="1.1"
           style="width: 100%; height: 100%; background: transparent;"
+          @progress="onProgress"
+          @load="onLoad"
+          @error="onError"
+          aria-label="Modelo 3D interactivo"
         />
       </div>
 
       <!-- Info del espécimen activo -->
-      <div class="liquen-info">
+      <div class="liquen-info" :aria-live="activeLichen.name" role="status">
         <span class="liquen-info__name">{{ activeLichen.name }}</span>
-        <span class="liquen-info__sep">·</span>
+        <span class="liquen-info__sep" aria-hidden="true">·</span>
         <span class="liquen-info__sci">{{ activeLichen.scientific }}</span>
       </div>
 
@@ -59,6 +79,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import ModelLoader from '../components/ModelLoader.vue'
+import { useModelLoader } from '../composables/useModelLoader'
 
 const baseUrl = import.meta.env.BASE_URL
 
@@ -140,6 +162,15 @@ const modelSrc = computed(() => {
   const segments = activeLichen.value.file.split('/').map(encodeURIComponent).join('/')
   return `${baseUrl}models/${segments}`
 })
+
+const { progress, isLoaded, reset, onProgress, onLoad, onError } = useModelLoader()
+
+function onTabClick(idx) {
+  if (activeIdx.value !== idx) {
+    reset()
+    activeIdx.value = idx
+  }
+}
 </script>
 
 <style scoped>

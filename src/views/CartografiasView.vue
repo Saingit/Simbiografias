@@ -1,9 +1,9 @@
 <template>
-  <main class="cart-page" :style="bgStyle">
+  <main class="cart-page" :style="bgStyle" role="main" aria-label="Cartografías - Diarios de campo">
 
     <!-- Logo: volver al inicio -->
-    <RouterLink to="/" class="cart-logo-wrap">
-      <img :src="`${baseUrl}images/logo/Recurso 7@4x.png`" alt="Simbiografías" class="cart-logo" />
+    <RouterLink to="/" class="cart-logo-wrap" aria-label="Volver al inicio">
+      <img :src="`${baseUrl}images/logo/Recurso 7@4x.png`" alt="" class="cart-logo" aria-hidden="true" />
     </RouterLink>
 
     <!-- Título -->
@@ -14,15 +14,20 @@
 
     <!-- Panel izquierdo: lugar seleccionado + fechas -->
     <Transition name="panel-slide">
-      <div v-if="activeLocation" class="dates-panel">
+      <div v-if="activeLocation" class="dates-panel" role="region" :aria-label="`Entradas para ${activeLocation.name}`">
         <h2 class="loc-name">{{ activeLocation.name }}</h2>
-        <ul class="dates-list">
+        <ul class="dates-list" role="list">
           <li
             v-for="entry in activeLocation.entries"
             :key="entry.id"
             class="date-item"
             :class="{ 'date-item--active': activeDiary?.id === entry.id, 'date-item--empty': !entry.pages.length }"
             @click="openDiary(entry)"
+            @keydown.enter="openDiary(entry)"
+            @keydown.space.prevent="openDiary(entry)"
+            :tabindex="entry.pages.length ? 0 : -1"
+            :aria-disabled="!entry.pages.length"
+            role="button"
           >
             {{ entry.label }}
           </li>
@@ -31,9 +36,9 @@
     </Transition>
 
     <!-- Mapa con etiquetas interactivas -->
-    <div class="map-area">
+    <div class="map-area" role="img" aria-label="Mapa interactivo de ubicaciones de campo">
       <div class="map-wrapper">
-        <img :src="`${baseUrl}images/mapa.png`" alt="Mapa corregimientos" class="map-img" />
+        <img :src="`${baseUrl}images/mapa.png`" alt="Mapa de corregimientos" class="map-img" loading="lazy" />
         <button
           v-for="loc in locations"
           :key="loc.id"
@@ -41,30 +46,58 @@
           :class="{ 'map-pin--active': activeLocation?.id === loc.id }"
           :style="{ left: loc.x, top: loc.y }"
           @click="selectLocation(loc)"
+          @keydown.enter="selectLocation(loc)"
+          @keydown.space.prevent="selectLocation(loc)"
+          :aria-label="`Seleccionar ${loc.name}`"
+          :aria-pressed="activeLocation?.id === loc.id"
+          role="button"
         >{{ loc.name }}</button>
       </div>
     </div>
 
     <!-- Visor del diario de campo -->
     <Transition name="diary-fade">
-      <div v-if="activeDiary" class="diary-backdrop" @click.self="closeDiary">
-        <button class="diary-close" @click="closeDiary">X</button>
+      <div 
+        v-if="activeDiary" 
+        class="diary-backdrop" 
+        @click.self="closeDiary"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="`Diario de campo: ${activeDiary.label}`"
+        @keydown.escape="closeDiary"
+        @keydown.left="flip(-1)"
+        @keydown.right="flip(1)"
+      >
+        <button class="diary-close" @click="closeDiary" aria-label="Cerrar diario de campo">X</button>
 
         <div class="diary-stage">
           <Transition :name="flipDir === 'fwd' ? 'page-fwd' : 'page-bwd'" mode="out-in">
             <img
               :key="`${activeDiary.id}_${currentPage}`"
               :src="imgSrc(activeDiary.pages[currentPage])"
-              :alt="activeDiary.label"
+              :alt="`Página ${currentPage + 1} del diario ${activeDiary.label}`"
               class="diary-page-img"
+              loading="lazy"
             />
           </Transition>
         </div>
 
-        <div v-if="activeDiary.pages.length > 1" class="flip-nav">
-          <button v-if="currentPage > 0" class="flip-btn" @click="flip(-1)">‹</button>
-          <span class="flip-count">{{ currentPage + 1 }} / {{ activeDiary.pages.length }}</span>
-          <button v-if="currentPage < activeDiary.pages.length - 1" class="flip-btn" @click="flip(1)">›</button>
+        <div v-if="activeDiary.pages.length > 1" class="flip-nav" role="navigation" aria-label="Navegación de páginas">
+          <button 
+            v-if="currentPage > 0" 
+            class="flip-btn" 
+            @click="flip(-1)"
+            aria-label="Página anterior"
+          >‹</button>
+          <span class="flip-count" aria-live="polite">
+            Página {{ currentPage + 1 }} de {{ activeDiary.pages.length }}
+          </span>
+          <button 
+            v-if="currentPage < activeDiary.pages.length - 1" 
+            class="flip-btn" 
+            @click="flip(1)"
+            aria-label="Página siguiente"
+          >›</button>
         </div>
       </div>
     </Transition>

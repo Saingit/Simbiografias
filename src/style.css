@@ -37,6 +37,72 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Skip Link ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-lime);
+  color: var(--color-dark);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 8px 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Focus visible global ── */
+:focus-visible {
+  outline: 3px solid var(--color-lime);
+  outline-offset: 3px;
+}
+
+/* Botones y elementos interactivos */
+button:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--color-lime);
+  outline-offset: 3px;
+}
+
+/* Remover outline por defecto solo para mouse */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── High contrast mode ── */
+@media (prefers-contrast: high) {
+  :root {
+    --color-lime: #00ff00;
+    --color-cream: #ffffff;
+    --color-dark: #000000;
+  }
+  
+  .hotspot-dot,
+  .hotspot-ring {
+    border-width: 3px;
+  }
+}
+
 /* ── Utilidades de color ── */
 .text-cream  { color: var(--color-cream) !important; }
 .text-olive  { color: var(--color-olive) !important; }

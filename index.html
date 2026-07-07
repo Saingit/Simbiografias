@@ -1,13 +1,66 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/src/assets/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/simbiografias/icons/icon-512x512.svg" />
+    <link rel="apple-touch-icon" href="/simbiografias/icons/icon-192x192.png" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/simbiografias/manifest.json" />
+    <meta name="theme-color" content="#B0FF55" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Simbiografías" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Simbiografías - Arte y Líquenes</title>
+    <meta name="description" content="Una experiencia interactiva que explora las relaciones de simbiosis en líquenes a través del arte y la tecnología. Modelos 3D, galerías y más." />
+    <meta name="keywords" content="simbiosis, líquenes, arte, biología, 3D, interactive, web experience" />
+    <meta name="author" content="Simbiografías" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://simbiografias.app/" />
+    <meta property="og:title" content="Simbiografías - Arte y Líquenes" />
+    <meta property="og:description" content="Una experiencia interactiva que explora las relaciones de simbiosis en líquenes a través del arte y la tecnología." />
+    <meta property="og:image" content="https://simbiografias.app/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://simbiografias.app/" />
+    <meta name="twitter:title" content="Simbiografías - Arte y Líquenes" />
+    <meta name="twitter:description" content="Una experiencia interactiva que explora las relaciones de simbiosis en líquenes a través del arte y la tecnología." />
+    <meta name="twitter:image" content="https://simbiografias.app/og-image.png" />
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://ajax.googleapis.com" />
+    
+    <!-- Fonts -->
+    <style>
+      /* Critical CSS for faster paint */
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #142021;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+    
+    <!-- Register Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/simbiografias/sw.js')
+            .then(reg => console.log('SW registered:', reg.scope))
+            .catch(err => console.warn('SW registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>

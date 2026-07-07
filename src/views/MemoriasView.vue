@@ -1,21 +1,9 @@
 <template>
-  <!--
-    ╔══════════════════════════════════════════════════════════════════╗
-    ║  COORDENADAS DE LOS TEXTOS (% de la imagen Memorias2.png)       ║
-    ║  Imagen base: 8000×4500 px  →  4 filas × 7 columnas            ║
-    ║                                                                  ║
-    ║  Objetivos    →  left: 28.6%   top: 37.5%                       ║
-    ║  Metodología  →  left: 85.7%   top: 37.5%                       ║
-    ║  Justificación→  left: 57.1%   top: 87.5%                       ║
-    ║                                                                  ║
-    ║  Todos usan transform:translate(-50%,-50%) para centrarse        ║
-    ╚══════════════════════════════════════════════════════════════════╝
-  -->
-  <main class="mem-page" :style="bgStyle">
+  <main class="mem-page" :style="bgStyle" role="main" aria-label="Memorias - Investigación creación">
 
     <!-- Logo: volver al inicio -->
-    <RouterLink to="/" class="mem-logo-wrap">
-      <img :src="`${baseUrl}images/logo/Recurso 7@4x.png`" alt="Simbiografías" class="mem-logo" />
+    <RouterLink to="/" class="mem-logo-wrap" aria-label="Volver al inicio">
+      <img :src="`${baseUrl}images/logo/Recurso 7@4x.png`" alt="" class="mem-logo" aria-hidden="true" />
     </RouterLink>
 
     <!-- Encabezado flotante -->
@@ -36,6 +24,7 @@
       class="mem-link"
       style="left:32%; top:50%;"
       @click="openPopup('objetivos')"
+      aria-label="Ver objetivos del proyecto"
     >Objetivos</button>
 
     <!-- Metodología: col 6-7, fila 1 → left 85.7% top 50% -->
@@ -43,6 +32,7 @@
       class="mem-link"
       style="left:85.7%; top:50%;"
       @click="openPopup('metodologia')"
+      aria-label="Ver metodología del proyecto"
     >Metodología</button>
 
     <!-- Justificación: col 4-5, fila 3 → left 57.1% top 87.5% -->
@@ -50,12 +40,20 @@
       class="mem-link"
       style="left:71%; top:93%;"
       @click="openPopup('justificacion')"
+      aria-label="Ver justificación del proyecto"
     >Justificación</button>
 
     <!-- ─── Panel popup ─── -->
     <Transition name="popup">
-      <div v-if="activePopup" class="popup-panel">
-        <button class="popup-close" @click="closePopup">X</button>
+      <div 
+        v-if="activePopup" 
+        class="popup-panel"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="popupTitle"
+        @keydown.escape="closePopup"
+      >
+        <button class="popup-close" @click="closePopup" aria-label="Cerrar panel">X</button>
 
         <template v-if="activePopup === 'objetivos'">
           <h2 class="popup-h1">Objetivos</h2>
@@ -68,7 +66,7 @@
           <h2 class="popup-h2">Objetivos específicos</h2>
           <div class="row  my-4 p-0">
             <div class="col-lg-2 m-0 p-0 iconovineta"> <img  :src="`${baseUrl}images/Re1.png`"
-            alt="vineta" class="img-fluid" width="50" height="50" ></div>
+            alt="Viñeta 1" class="img-fluid" width="50" height="50" loading="lazy" ></div>
           <div class="col-lg-10 m-0 px-3"><p class="popup-text">
             Interpretar el concepto de simbiosis asociado a los líquenes para la generación
             de recursos simbólicos que representen relaciones de interdependencia y conexión.
@@ -76,7 +74,7 @@
           </div>
           <div class="row  my-4 p-0">
             <div class="col-lg-2 m-0 p-0 iconovineta"> <img  :src="`${baseUrl}images/Re2.png`"
-            alt="vineta" class="img-fluid" width="50" height="50" ></div>
+            alt="Viñeta 2" class="img-fluid" width="50" height="50" loading="lazy" ></div>
           <div class="col-lg-10 m-0 px-3"><p class="popup-text">
             Explorar a través de la experimentación representaciones visuales que evoquen
             interrelaciones simbióticas empleando los líquenes como caso de estudio.
@@ -84,7 +82,7 @@
           </div>
           <div class="row  my-4 p-0">
             <div class="col-lg-2 m-0 p-0 iconovineta"> <img  :src="`${baseUrl}images/Re3.png`"
-            alt="vineta" class="img-fluid" width="50" height="50" ></div>
+            alt="Viñeta 3" class="img-fluid" width="50" height="50" loading="lazy" ></div>
           <div class="col-lg-10 m-0 px-3"><p class="popup-text">
             Crear una obra digital que integre los recursos simbólicos de los líquenes como
             propuesta de interpretación visual.
@@ -104,8 +102,9 @@
           <h2 class="popup-h1">Metodología</h2>
           <img
             :src="`${baseUrl}images/memorias/metodologia.webp`"
-            alt="Metodología"
+            alt="Infografía de metodología del proyecto"
             class="popup-infographic img-fluid" width="100%"
+            loading="lazy"
           />
         </template>
 
@@ -163,10 +162,21 @@ const bgStyle = computed(() => ({
 }))
 
 const activePopup = ref(null)
+const popupTitle = computed(() => {
+  const titles = {
+    objetivos: 'Objetivos del proyecto',
+    metodologia: 'Metodología del proyecto',
+    justificacion: 'Justificación del proyecto'
+  }
+  return titles[activePopup.value] || 'Panel de información'
+})
+
 function openPopup(id) { activePopup.value = id }
 function closePopup() { activePopup.value = null }
 
-function onKeyDown(e) { if (e.key === 'Escape') closePopup() }
+function onKeyDown(e) { 
+  if (e.key === 'Escape') closePopup() 
+}
 onMounted(() => window.addEventListener('keydown', onKeyDown))
 onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 </script>

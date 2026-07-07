@@ -2,18 +2,22 @@
   <nav
     class="navbar fixed-top px-4 py-3 nav-bar"
     :class="scrolled ? 'scrolled' : ''"
+    role="navigation"
+    aria-label="Navegación principal"
   >
     <!-- Logo -->
-    <RouterLink to="/" class="navbar-brand p-0 me-auto">
-      <img :src="`${baseUrl}images/logo/Recurso 8@4x.png`" alt="Simbiografías" class="nav-logo rounded-3" />
+    <RouterLink to="/" class="navbar-brand p-0 me-auto" aria-label="Simbiografías - Ir al inicio">
+      <img :src="`${baseUrl}images/logo/Recurso 8@4x.png`" alt="" class="nav-logo rounded-3" aria-hidden="true" />
     </RouterLink>
 
     <!-- Nav links -->
-    <!-- <ul class="navbar-nav flex-row gap-4 mb-0">
-      <li v-for="link in links" :key="link.to" class="nav-item">
+    <!-- <ul class="navbar-nav flex-row gap-4 mb-0" role="menubar">
+      <li v-for="link in links" :key="link.to" class="nav-item" role="none">
         <RouterLink
           :to="link.to"
           class="nav-link fw-medium"
+          role="menuitem"
+          :aria-current="route.path === link.to ? 'page' : undefined"
           :style="{
             fontSize: '0.875rem',
             letterSpacing: '0.05em',
@@ -31,21 +35,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
 const baseUrl = import.meta.env.BASE_URL
 import { RouterLink, useRoute } from 'vue-router'
+import { useScrollPosition } from '../composables/useScrollPosition'
 
 const route = useRoute()
-const scrolled = ref(false)
+
+const { isPastThreshold: scrolled } = useScrollPosition({ threshold: 20 })
 
 const links = [
   { to: '/',        label: 'Inicio' },
   { to: '/diarios', label: 'Diarios de campo' },
 ]
-
-function onScroll() { scrolled.value = window.scrollY > 20 }
-onMounted(() => window.addEventListener('scroll', onScroll))
-onUnmounted(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <style scoped>
