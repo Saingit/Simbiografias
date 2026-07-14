@@ -25,4 +25,4 @@ dist-ssr
 
 
 # modelos 3d Pesados
-*.gbl
+*.gbl*.mov

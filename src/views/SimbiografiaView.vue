@@ -30,14 +30,13 @@
       <RouterLink class="feature-pill feature-pill--model" to="/liquenes" aria-label="Ver modelos 3D">
         3D
       </RouterLink>
-      <a 
+      <button 
         class="feature-pill feature-pill--videos" 
-        href="#videos" 
-        @click.prevent="scrollTo('videos')"
-        aria-label="Ir a sección de videos"
+        @click="openVideoGallery(0)"
+        aria-label="Abrir galería de videos"
       >
         Videos
-      </a>
+      </button>
     </section>
 
     <!-- ── Galería de fotografías ── -->
@@ -121,6 +120,15 @@
       @close="closeGallery"
       @change="onPhotoChange"
     />
+
+    <!-- Galería de videos -->
+    <VideoGallery
+      ref="videoGalleryRef"
+      :videos="videos"
+      :initial-index="currentVideoIndex"
+      @close="closeVideoGallery"
+      @change="onVideoChange"
+    />
   </main>
 </template>
 
@@ -128,11 +136,13 @@
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import PhotoGallery from '../components/PhotoGallery.vue'
+import VideoGallery from '../components/VideoGallery.vue'
 import { usePhotoGallery } from '../composables/usePhotoGallery'
 
 const baseUrl = import.meta.env.BASE_URL
 
 const galleryRef = ref(null)
+const videoGalleryRef = ref(null)
 
 const photos = [
   '1',  '2',  '3',  '4',  '5',  '6',  '7_1','8',  '9',  '10',
@@ -165,6 +175,43 @@ function openGallery(index) {
 
 function onPhotoChange(index) {
   currentPhotoIndex.value = index
+}
+
+// Videos
+const currentVideoIndex = ref(0)
+
+const videos = [
+  { id: 'v1', title: 'Cladonia', src: `${baseUrl}videos/Cladonia.mp4`, poster: `${baseUrl}images/fotografias/1.jpg` },
+  { id: 'v2', title: 'Herpothallon rubrocinctum', src: `${baseUrl}videos/Herpothallon%20rubrocinctum.mp4`, poster: `${baseUrl}images/fotografias/2.jpg` },
+  { id: 'v3', title: 'Heterodermia', src: `${baseUrl}videos/Heterodermia.mp4`, poster: `${baseUrl}images/fotografias/3.jpg` },
+  { id: 'v4', title: 'Parmotrema', src: `${baseUrl}videos/Parmotrema.mp4`, poster: `${baseUrl}images/fotografias/4.jpg` },
+  { id: 'v5', title: 'IMG_1249', src: `${baseUrl}videos/IMG_1249.mp4`, poster: `${baseUrl}images/fotografias/5.jpg` },
+  { id: 'v6', title: 'b004_08120027', src: `${baseUrl}videos/b004_08120027_C146_00040030.mp4`, poster: `${baseUrl}images/fotografias/6.jpg` },
+  { id: 'v7', title: 'b004_08120030', src: `${baseUrl}videos/b004_08120030_C147_00044370.mp4`, poster: `${baseUrl}images/fotografias/7_1.jpg` },
+  { id: 'v8', title: 'b004_08120031', src: `${baseUrl}videos/b004_08120031_C148_00045832.mp4`, poster: `${baseUrl}images/fotografias/8.jpg` },
+  { id: 'v9', title: 'b004_08120032', src: `${baseUrl}videos/b004_08120032_C149_00047463.mp4`, poster: `${baseUrl}images/fotografias/9.jpg` },
+  { id: 'v10', title: 'b004_08120033', src: `${baseUrl}videos/b004_08120033_C150_00048492.mp4`, poster: `${baseUrl}images/fotografias/10.jpg` },
+  { id: 'v11', title: 'b004_08120045', src: `${baseUrl}videos/b004_08120045_C155_00065789.mp4`, poster: `${baseUrl}images/fotografias/11.jpg` },
+  { id: 'v12', title: 'b004_08120052', src: `${baseUrl}videos/b004_08120052_C160_00075731.mp4`, poster: `${baseUrl}images/fotografias/12.jpg` },
+  { id: 'v13', title: 'b004_08120054', src: `${baseUrl}videos/b004_08120054_C162_00078801.mp4`, poster: `${baseUrl}images/fotografias/13.jpg` },
+  { id: 'v14', title: 'b004_08120118', src: `${baseUrl}videos/b004_08120118_C169_00112835.mp4`, poster: `${baseUrl}images/fotografias/14.jpg` },
+  { id: 'v15', title: 'b004_08120126', src: `${baseUrl}videos/b004_08120126_C171_00124300.mp4`, poster: `${baseUrl}images/fotografias/15.jpg` },
+  { id: 'v16', title: 'b004_08120133', src: `${baseUrl}videos/b004_08120133_C173_00134563.mp4`, poster: `${baseUrl}images/fotografias/16.jpg` },
+  { id: 'v17', title: 'b004_08120141', src: `${baseUrl}videos/b004_08120141_C174_00145721.mp4`, poster: `${baseUrl}images/fotografias/17.jpg` },
+  { id: 'v18', title: 'b004_08120143', src: `${baseUrl}videos/b004_08120143_C177_00149615.mp4`, poster: `${baseUrl}images/fotografias/18.jpg` },
+]
+
+function openVideoGallery(index) {
+  currentVideoIndex.value = index
+  videoGalleryRef.value?.open(index)
+}
+
+function closeVideoGallery() {
+  currentVideoIndex.value = 0
+}
+
+function onVideoChange(index) {
+  currentVideoIndex.value = index
 }
 
 function scrollTo(id) {
