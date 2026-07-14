@@ -48,15 +48,14 @@
         <div class="foto-card foto-card--investigacion">
           <span>Investigación<br>– creación</span>
         </div>
-
-        <div class="foto-card foto-card--simbiosis">
-          <span class="sw sw--1">SIMBIOSIS</span>
-          <span class="sw sw--2">SIMBIOSIS</span>
-          <span class="sw sw--3">SIM<span class="sw-dim">BIOSIS</span></span>
-          <span class="sw sw--4">SIMBIOSIS</span>
-          <span class="sw sw--5">SIMBIOSIS</span>
-          <div class="simbiosis-blob" aria-hidden="true"></div>
+        <div class="foto-card foto-card--investigacion">
+          <span>Investigación<br>– creación</span>
         </div>
+        <div class="foto-card foto-card--investigacion">
+          <span class="sw sw--1">SIMBIOSIS</span>
+        </div>
+
+    
 
         <div class="foto-card foto-card--que-es">
           <span>¿Qué es<br>un liquen?</span>
@@ -86,32 +85,54 @@
           <span>COEXISTENCIA</span>
         </div>
 
-        <!-- Fotos auto-placed -->
-        <div v-for="(photo, index) in photos" :key="photo" class="foto-item">
+        <!-- Fotos auto-placed con click para abrir galería -->
+        <div 
+          v-for="(photo, index) in photos" 
+          :key="photo" 
+          class="foto-item foto-item--clickable"
+          @click="openGallery(index)"
+          @keydown.enter="openGallery(index)"
+          @keydown.space.prevent="openGallery(index)"
+          tabindex="0"
+          role="button"
+          :aria-label="`Ver fotografía ${index + 1} de ${photos.length} en pantalla completa`"
+        >
           <img
             :src="`${baseUrl}images/fotografias/${photo}.jpg`"
             :alt="`Fotografía de líquen ${index + 1} de ${photos.length}`"
             loading="lazy"
           />
+          <div class="foto-item__overlay">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+            </svg>
+            <span class="foto-item__hint">Click para ampliar</span>
+          </div>
         </div>
 
       </div>
     </section>
+
+    <!-- Galería de fotos con Swiper -->
+    <PhotoGallery
+      ref="galleryRef"
+      :images="galleryImages"
+      :initial-index="currentPhotoIndex"
+      @close="closeGallery"
+      @change="onPhotoChange"
+    />
   </main>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import PhotoGallery from '../components/PhotoGallery.vue'
+import { usePhotoGallery } from '../composables/usePhotoGallery'
 
 const baseUrl = import.meta.env.BASE_URL
 
-function scrollTo(id) {
-  const element = document.getElementById(id)
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' })
-    element.focus()
-  }
-}
+const galleryRef = ref(null)
 
 const photos = [
   '1',  '2',  '3',  '4',  '5',  '6',  '7_1','8',  '9',  '10',
@@ -126,6 +147,33 @@ const photos = [
   '93', '94', '95', '96', '97', '98', '99', '100','101','102',
   '103','104',
 ]
+
+const {
+  isGalleryOpen,
+  currentPhotoIndex,
+  currentEffect,
+  galleryImages,
+  openGallery: openGalleryBase,
+  closeGallery,
+  setEffect
+} = usePhotoGallery(photos, baseUrl)
+
+function openGallery(index) {
+  openGalleryBase(index)
+  galleryRef.value?.open(index)
+}
+
+function onPhotoChange(index) {
+  currentPhotoIndex.value = index
+}
+
+function scrollTo(id) {
+  const element = document.getElementById(id)
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' })
+    element.focus()
+  }
+}
 </script>
 
 <style scoped>
@@ -203,7 +251,7 @@ const photos = [
   border-radius: clamp(1.8rem, 2.8vw, 3.4rem);
   color: var(--color-cream);
   background: #aabc51;
-  font-size: clamp(2.8rem, 4.7vw, 5.8rem);
+  font-size: clamp(2.0rem, 4.7vw, 5.0rem);
   font-weight: 300;
   line-height: 1;
   text-decoration: none;
@@ -245,6 +293,49 @@ const photos = [
   transition: transform 0.4s ease;
 }
 .foto-item:hover img { transform: scale(1.06); }
+
+/* ── Fotos clickeables con overlay ── */
+.foto-item--clickable {
+  cursor: pointer;
+  position: relative;
+}
+
+.foto-item--clickable:focus-visible {
+  outline: 3px solid var(--color-lime);
+  outline-offset: 2px;
+  z-index: 10;
+}
+
+.foto-item__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 24, 25, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.foto-item--clickable:hover .foto-item__overlay {
+  opacity: 1;
+}
+
+.foto-item__overlay svg {
+  color: var(--color-lime);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.foto-item__hint {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  color: rgba(252, 248, 237, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 
 /* ── Cards: base ── */
 .foto-card {
