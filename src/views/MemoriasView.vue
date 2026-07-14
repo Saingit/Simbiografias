@@ -56,7 +56,7 @@
         <button class="popup-close" @click="closePopup" aria-label="Cerrar panel">X</button>
 
         <template v-if="activePopup === 'objetivos'">
-          <h2 class="popup-h1">Objetivos</h2>
+          <h2 class="popup-h11">Objetivos</h2>
           <h2 class="popup-h1">Objetivo general</h2>
           <p class="popup-text">
             Desarrollar interpretaciones visuales que sugieran relaciones de interdependencia
@@ -99,7 +99,7 @@
         </template>
 
         <template v-if="activePopup === 'metodologia'">
-          <h2 class="popup-h1">Metodología</h2>
+          <h2 class="popup-h11">Metodología</h2>
           <img
             :src="`${baseUrl}images/memorias/metodologia.webp`"
             alt="Infografía de metodología del proyecto"
@@ -109,7 +109,7 @@
         </template>
 
         <template v-if="activePopup === 'justificacion'">
-          <h2 class="popup-h1">Justificación</h2>
+          <h2 class="popup-h11">Justificación</h2>
           <p class="popup-text">
             Esta <strong>investigación-creación</strong> surge de la pregunta por cómo
             interpretar, desde el <strong>arte</strong>, las relaciones de
@@ -324,6 +324,13 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
   font-size: clamp(1.1rem, 1.8vw, 1.5rem);
   font-weight: 400;
   color: #6b7961;
+  margin: 0 0 1rem;
+}
+.popup-h11 {
+   font-family: 'Poppins', sans-serif;
+  font-size: clamp(2rem, 1.2vw, 2rem);
+  font-weight: 400;
+  color: #233239;
   margin: 0 0 1rem;
 }
 .popup-h2 {

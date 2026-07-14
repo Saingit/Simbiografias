@@ -45,35 +45,35 @@
       <div class="foto-grid">
 
         <!-- Cards con posición explícita — deben ir primero en el DOM -->
-        <div class="foto-card foto-card--investigacion">
+        <div class="foto-card foto-card--investigacion" :style="{ backgroundImage: `url('${baseUrl}images/fotografias/1.jpg')` }">
           <span>Investigación<br>– creación</span>
         </div>
-        <div class="foto-card foto-card--investigacion">
+        <div class="foto-card foto-card--investigacion" :style="{ backgroundImage: `url('${baseUrl}images/fotografias/3.jpg')` }">
           <span>Investigación<br>– creación</span>
         </div>
-        <div class="foto-card foto-card--investigacion">
+        <!-- <div class="foto-card foto-card--investigacion" :style="{ backgroundImage: `url('${baseUrl}images/fotografias/3.jpg')` }">
           <span class="sw sw--1">SIMBIOSIS</span>
-        </div>
+        </div> -->
 
     
 
-        <div class="foto-card foto-card--que-es">
+        <div class="foto-card foto-card--que-es" :style="{ backgroundImage: `url('${baseUrl}images/fotografias/5.jpg')` }">
           <span>¿Qué es<br>un liquen?</span>
         </div>
 
-        <div class="foto-card foto-card--todos-somos">
+        <div class="foto-card foto-card--todos-somos" :style="{ backgroundImage: `url('${baseUrl}images/fotografias/7_1.jpg')` }">
           <span>"Todos somos líquenes"</span>
         </div>
 
-        <div class="foto-card foto-card--interdep">
+        <div class="foto-card foto-card--interdep" :style="{ backgroundImage: `url('${baseUrl}images/fotografias/10.jpg')` }">
           <span>INTER-<br>DEPENDENCIA</span>
         </div>
 
-        <div class="foto-card foto-card--interpretaciones">
+        <div class="foto-card foto-card--interpretaciones" :style="{ backgroundImage: `url('${baseUrl}images/fotografias/15.jpg')` }">
           <span>Interpretaciones<br>visuales</span>
         </div>
 
-        <div class="foto-card foto-card--conexion">
+        <div class="foto-card foto-card--conexion" :style="{ backgroundImage: `url('${baseUrl}images/fotografias/20.jpg')` }">
           <span>CONEXIÓN</span>
         </div>
 
@@ -81,7 +81,7 @@
           <img :src="`${baseUrl}images/fotografias/47.jpg`" class="lichen-overlay" alt="Gráfico de liquen" loading="lazy" />
         </div>
 
-        <div class="foto-card foto-card--coexistencia">
+        <div class="foto-card foto-card--coexistencia" :style="{ backgroundImage: `url('${baseUrl}images/fotografias/25.jpg')` }">
           <span>COEXISTENCIA</span>
         </div>
 
@@ -270,14 +270,14 @@ function scrollTo(id) {
 /* ─── GALERÍA ─────────────────────────────────────────────── */
 .foto-section {
   width: 100%;
-  background: #0e1819;
+  background: #FFF;
 }
 
 .foto-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-auto-rows: calc((100vw - 6px) / 7);
-  gap: 3px;
+  gap: 10px;
 }
 
 /* ── Fotos ── */
@@ -346,13 +346,32 @@ function scrollTo(id) {
   position: relative;
   font-family: 'Poppins', sans-serif;
   text-align: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.foto-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 47, 43, 0.75);
+  transition: background 0.3s ease;
+}
+
+.foto-card:hover::before {
+  background: rgba(30, 47, 43, 0.6);
+}
+
+.foto-card span {
+  position: relative;
+  z-index: 1;
 }
 
 /* ── Investigación – creación ── */
 .foto-card--investigacion {
   grid-column: 2;
   grid-row: 1;
-  background: #1e2f2b;
   color: #fcf8ed;
   font-size: clamp(0.6rem, 0.85vw, 1rem);
   font-weight: 600;
@@ -364,7 +383,8 @@ function scrollTo(id) {
 .foto-card--simbiosis {
   grid-column: 2;
   grid-row: 2 / 5;
-  background: #1c2e2a;
+  background: #FFF;
+  /* background: #1c2e2a; */
   display: block;
   position: relative;
   overflow: hidden;
@@ -405,8 +425,7 @@ function scrollTo(id) {
 .foto-card--que-es {
   grid-column: 2;
   grid-row: 5 / 7;
-  background: #b0ff55;
-  color: #1e2f2b;
+  color: #fcf8ed;
   font-size: clamp(0.7rem, 1.05vw, 1.25rem);
   font-weight: 700;
   line-height: 1.3;
@@ -417,7 +436,6 @@ function scrollTo(id) {
 .foto-card--todos-somos {
   grid-column: 4;
   grid-row: 1;
-  background: #1e2f2b;
   color: #fcf8ed;
   font-size: clamp(0.55rem, 0.8vw, 0.95rem);
   font-style: italic;
@@ -430,8 +448,7 @@ function scrollTo(id) {
 .foto-card--interdep {
   grid-column: 5;
   grid-row: 1 / 3;
-  background: #b0ff55;
-  color: #1e2f2b;
+  color: #fcf8ed;
   font-size: clamp(0.85rem, 1.55vw, 1.95rem);
   font-weight: 700;
   line-height: 1.15;
@@ -442,7 +459,6 @@ function scrollTo(id) {
 .foto-card--interpretaciones {
   grid-column: 6;
   grid-row: 1;
-  background: #1e2f2b;
   color: #fcf8ed;
   font-size: clamp(0.5rem, 0.75vw, 0.9rem);
   font-weight: 400;
@@ -454,8 +470,7 @@ function scrollTo(id) {
 .foto-card--conexion {
   grid-column: 4;
   grid-row: 4 / 6;
-  background: #b0ff55;
-  color: #1e2f2b;
+  color: #fcf8ed;
   font-size: clamp(0.95rem, 1.7vw, 2.1rem);
   font-weight: 700;
   padding: 0.75rem;
