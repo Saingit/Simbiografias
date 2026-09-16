@@ -9,7 +9,7 @@
     <!-- Título -->
     <div class="liquen-heading">
       <h1>Simbiosis</h1>
-      <p>Modelos 3D</p>
+      <h3 class="page-subtitle">Modelos 3D</h3>
     </div>
 
     <!-- Contenido: tabs + visor -->
@@ -66,10 +66,22 @@
       </div>
 
       <!-- Info del espécimen activo -->
-      <div class="liquen-info" :aria-live="activeLichen.name" role="status">
+      <div class="liquen-info" aria-live="polite" role="status">
         <span class="liquen-info__name">{{ activeLichen.name }}</span>
         <span class="liquen-info__sep" aria-hidden="true">·</span>
         <span class="liquen-info__sci">{{ activeLichen.scientific }}</span>
+      </div>
+
+      <div class="liquen-share">
+        <button type="button" @click="copyLink">Copiar enlace del modelo</button>
+        <input
+          :value="shareUrl"
+          readonly
+          aria-label="Enlace directo al modelo seleccionado"
+          @focus="$event.target.select()"
+          @click="$event.target.select()"
+        />
+        <span role="status">{{ copyStatus }}</span>
       </div>
 
     </div>
@@ -77,12 +89,15 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, computed, onMounted, watch } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import ModelLoader from '../components/ModelLoader.vue'
 import { useModelLoader } from '../composables/useModelLoader'
 
 const baseUrl = import.meta.env.BASE_URL
+const route = useRoute()
+const router = useRouter()
+const copyStatus = ref('')
 
 onMounted(() => {
   if (!customElements.get('model-viewer')) {
@@ -103,6 +118,7 @@ const bgStyle = computed(() => ({
 const lichens = [
   {
     id: 1,
+    slug: 'liquen-1',
     name: 'Liquen 1',
     scientific: 'Lichen sp. 01',
     file: 'liquen1.glb',
@@ -111,6 +127,7 @@ const lichens = [
  
   {
     id: 2,
+    slug: 'liquen-5-v2',
     name: 'Liquen 5 (v2)',
     scientific: 'Lichen sp. 05',
     file: 'Liquen 5.glb',
@@ -119,6 +136,7 @@ const lichens = [
   
   {
     id: 3,
+    slug: 'liquen-6-v2',
     name: 'Liquen 6 (v2)',
     scientific: 'Lichen sp. 06',
     file: 'liquen 6.glb',
@@ -126,6 +144,7 @@ const lichens = [
   },
   {
     id: 4,
+    slug: 'liquen-7',
     name: 'Liquen 7',
     scientific: 'Lichen sp. 07',
     file: 'Liquen 7.glb',
@@ -133,6 +152,7 @@ const lichens = [
   },
   {
     id: 5,
+    slug: 'liquen-14',
     name: 'Liquen 14',
     scientific: 'Lichen sp. 14',
     file: 'liquen 14.glb',
@@ -140,6 +160,7 @@ const lichens = [
   },
   {
     id: 6,
+    slug: 'cladonia-confusa',
     name: 'Cladonia confusa',
     scientific: 'Cladonia confusa R.Sant.',
     file: 'Cl_confusa.glb',
@@ -147,14 +168,39 @@ const lichens = [
   },
   {
     id: 7,
+    slug: 'cladonia-isabellina',
     name: 'Cladonia isabellina',
     scientific: 'Cladonia isabellina (Müll.Arg.) Vain.',
     file: 'Cladonia Isabellina_baja.glb',
     description: 'Talos erectos con ápices acopados, propios de ecosistemas de alta montaña. Modelo de baja resolución para visualización ágil.',
   },
+  {
+    id: 8,
+    slug: 'liquen-12',
+    name: 'Liquen 12',
+    scientific: 'Identificación pendiente',
+    file: 'Liquen 12.glb',
+  },
+  {
+    id: 9,
+    slug: 'liquen-15',
+    name: 'Liquen 15',
+    scientific: 'Identificación pendiente',
+    file: 'Liquen15.glb',
+  },
+  {
+    id: 10,
+    slug: 'stereocaulon',
+    name: 'Stereocaulon',
+    scientific: 'Stereocaulon sp.',
+    file: 'Stereocaulon.glb',
+  },
 ]
 
-const activeIdx = ref(0)
+const activeIdx = computed(() => {
+  const idx = lichens.findIndex(lichen => lichen.slug === route.params.modelo)
+  return idx < 0 ? 0 : idx
+})
 
 const activeLichen = computed(() => lichens[activeIdx.value])
 
@@ -165,15 +211,60 @@ const modelSrc = computed(() => {
 
 const { progress, isLoaded, reset, onProgress, onLoad, onError } = useModelLoader()
 
+const shareUrl = computed(() => new URL(router.resolve({
+  name: 'liquenes',
+  params: { modelo: activeLichen.value.slug },
+}).href, window.location.href).href)
+
+watch(() => route.params.modelo, (modelo) => {
+  if (modelo && !lichens.some(lichen => lichen.slug === modelo)) {
+    router.replace({ name: 'liquenes', params: { modelo: lichens[0].slug } })
+  }
+}, { immediate: true })
+
+watch(activeLichen, () => {
+  reset()
+  copyStatus.value = ''
+}, { flush: 'sync' })
+
 function onTabClick(idx) {
-  if (activeIdx.value !== idx) {
-    reset()
-    activeIdx.value = idx
+  router.push({ name: 'liquenes', params: { modelo: lichens[idx].slug } })
+}
+
+async function copyLink() {
+  const url = shareUrl.value
+  try {
+    await navigator.clipboard.writeText(url)
+    if (shareUrl.value === url) copyStatus.value = 'Enlace copiado'
+  } catch {
+    if (shareUrl.value === url) {
+      copyStatus.value = 'Selecciona el enlace y cópialo manualmente.'
+    }
   }
 }
 </script>
 
 <style scoped>
+.liquen-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  font-size: 0.8rem;
+}
+.liquen-share button,
+.liquen-share input {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--color-dark);
+  border-radius: 4px;
+  color: var(--color-dark);
+  background: #fcf8ed;
+}
+.liquen-share button { cursor: pointer; }
+.liquen-share input { flex: 1; min-width: 0; }
+.liquen-share span { color: var(--color-dark); }
+
 .liquen-page {
   position: relative;
   width: 100vw;
@@ -199,21 +290,20 @@ function onTabClick(idx) {
 .liquen-heading {
   position: absolute;
   top: clamp(2rem, 2vw, 3.25rem);
-  left: clamp(12rem, 14.7vw, 18rem);
+  left: calc(1.5% + 140px);
   z-index: 20;
   pointer-events: none;
 }
 .liquen-heading h1 {
-  color: var(--color-dark);;
-  font-size: clamp(2rem, 2.5vw, 3.5rem);
-  font-weight: 300;
-  margin: 0 0 0.15rem;
-  line-height: 1;
+  color: var(--color-lime);
+  font-size: clamp(2.5rem, 2.5vw, 5.1rem);
+  font-weight: 500;
+  margin: 0 0 0.35rem;
+  line-height: 0.98;
 }
-.liquen-heading p {
+.liquen-heading h3 {
   color: var(--color-slate);
-  font-size: clamp(1rem, 1.5vw, 2rem);
-  font-weight: 300;
+  font-size: 35px;
   margin: 0;
 }
 
@@ -238,9 +328,12 @@ function onTabClick(idx) {
   margin: 0 0 3px;
   padding: 0;
   gap: 3px;
-  scrollbar-width: none;
+  scrollbar-width: thin;
 }
-.liquen-tabs::-webkit-scrollbar { display: none; }
+
+/* Centrar si hay espacio; conservar el inicio accesible cuando hay desbordamiento. */
+.liquen-tab:first-child { margin-left: auto; }
+.liquen-tab:last-child { margin-right: auto; }
 
 .liquen-tab {
   flex-shrink: 0;

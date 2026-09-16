@@ -1,6 +1,6 @@
 <template>
   <main
-    class="min-vh-100 d-flex align-items-center justify-content-end"
+    class="conexiones-page min-vh-100 d-flex align-items-center justify-content-end"
     :style="` background-image: url('${baseUrl}images/fondo.png'); background-size: cover; background-attachment: fixed;`"
     role="main"
     aria-label="Conexiones - Experiencia interactiva"

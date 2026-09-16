@@ -9,7 +9,7 @@
     <!-- Título -->
     <div class="cart-heading">
       <h1>Cartografías</h1>
-      <h3>Diarios de campo</h3>
+      <h3 class="page-subtitle">Diarios de campo</h3>
     </div>
 
     <!-- Panel izquierdo: lugar seleccionado + fechas -->
@@ -36,7 +36,7 @@
     </Transition>
 
     <!-- Mapa con etiquetas interactivas -->
-    <div class="map-area" role="img" aria-label="Mapa interactivo de ubicaciones de campo">
+    <div class="map-area" role="region" aria-label="Mapa interactivo de ubicaciones de campo" tabindex="0">
       <div class="map-wrapper">
         <img :src="`${baseUrl}images/mapa.png`" alt="Mapa de corregimientos" class="map-img" loading="lazy" />
         <button
@@ -258,14 +258,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 .cart-heading {
   position: absolute;
   top: clamp(2rem, 2vw, 3.25rem);
-  left: clamp(12rem, 14.7vw, 18rem);
+  left: calc(1.5% + 140px);
   z-index: 20;
   pointer-events: none;
 }
 .cart-heading h1 {
   color: #b0ff55;
   font-size: clamp(2rem, 2.5vw, 3.5rem);
-  font-weight: 300;
+  font-weight: 500;
   margin: 0 0 0.15rem;
   line-height: 1;
 }
@@ -276,12 +276,12 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
   margin: 0;
 }
 
-/* ── Mapa (ocupa el 67% derecho de la pantalla) ── */
+/* ── Mapa ampliado, con espacio para el panel lateral ── */
 .map-area {
   position: absolute;
-  left: 33%;
+  left: 8%;
   top: 0;
-  right: 0;
+  right: 2%;
   bottom: 0;
   display: flex;
   align-items: center;
@@ -289,15 +289,13 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 }
 .map-wrapper {
   position: relative;
-  max-width: 100%;
+  width: min(100%, 177.7778vh);
   max-height: 100%;
   line-height: 0;
 }
 .map-img {
   display: block;
-  max-width: 100%;
-  max-height: 100vh;
-  width: auto;
+  width: 100%;
   height: auto;
 }
 
@@ -310,10 +308,11 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
   cursor: pointer;
   color: #b0ff55;
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(0.6rem, 0.9vw, 0.85rem);
-  font-weight: 300;
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  font-weight: 500;
+  text-shadow: 0 1px 3px #142021, 0 0 6px #142021;
   white-space: nowrap;
-  padding: 0;
+  padding: 0.3rem 0.4rem;
   z-index: 10;
   text-align: center;
   line-height: 1.3;
@@ -331,13 +330,15 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
   left: 2%;
   top: 40%;
   width: 26%;
-  z-index: 55;
+  z-index: 20;
+  max-height: 56%;
+  overflow-y: auto;
 }
 .loc-name {
   color: #b0ff55;
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(0.85rem, 1.2vw, 1.2rem);
-  font-weight: 400;
+  font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+  font-weight: 500;
   margin: 0 0 0.65rem;
 }
 .dates-list {
@@ -348,10 +349,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 .date-item {
   color: #fcf8ed;
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(0.7rem, 0.95vw, 0.9rem);
-  font-weight: 300;
+  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  font-weight: 400;
   cursor: pointer;
-  padding: 0.18rem 0;
+  padding: 0.3rem 0;
   line-height: 1.55;
   transition: opacity 0.2s;
 }
@@ -361,10 +362,45 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
   font-weight: 500;
 }
 .date-item--empty {
-  opacity: 0.35;
+  opacity: 0.6;
   cursor: default;
 }
-.date-item--empty:hover { opacity: 0.35; }
+.date-item--empty:hover { opacity: 0.6; }
+
+@media (max-width: 760px) {
+  .cart-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    padding: 9rem 1rem 1.5rem;
+  }
+  .cart-logo-wrap { left: 1rem; top: 1.5rem; }
+  .cart-logo { width: 72px; }
+  .cart-heading { left: calc(1rem + 112px); top: 2rem; }
+  .cart-heading h1 { font-size: 1.8rem; }
+  .cart-heading h3 { font-size: 1.25rem; }
+  .dates-panel {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-height: none;
+    margin-bottom: 1rem;
+  }
+  .map-area {
+    position: relative;
+    inset: auto;
+    display: block;
+    overflow-x: auto;
+  }
+  .map-wrapper {
+    width: 760px;
+    max-height: none;
+    /* El margen vacío de la imagen deja espacio al panel en escritorio. */
+    margin-left: -230px;
+  }
+  .diary-page-img { max-width: 94vw; }
+}
 
 /* ── Transición del panel ── */
 .panel-slide-enter-active { transition: opacity 0.3s ease, transform 0.3s ease; }

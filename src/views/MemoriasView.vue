@@ -14,7 +14,7 @@
 
     <div class="simbiografia-heading">
         <h1 id="simbiografia-title">Memorias</h1>
-        <h3>Investigación - creación</h3>
+        <h3 class="page-subtitle">Investigación - creación</h3>
       </div>
 
     <!-- ─── Textos clicables (coordenadas en % sobre la imagen) ─── -->
@@ -237,14 +237,14 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
   position: absolute;
   z-index: 2;
   top: clamp(2rem, 2vw, 3.25rem);
-  left: clamp(12rem, 14.7vw, 18rem);
+  left: calc(1.5% + 140px);
   color: var(--color-cream);
 }
 
 .simbiografia-heading h1 {
   color: var(--color-lime);
   font-size: clamp(2.5rem, 2.5vw, 5.1rem);
-  font-weight: 300;
+  font-weight: 500;
   line-height: 0.98;
   margin: 0 0 0.35rem;
 }

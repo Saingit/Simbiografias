@@ -1,15 +1,15 @@
 <template>
   <main
-    class="min-vh-100"
-    :style="`padding-top: 5rem; background-image: url('${baseUrl}images/fondo.png'); background-size: cover; background-attachment: fixed;`"
+    class="diarios-page min-vh-100"
+    :style="`padding-top: 2rem; background-image: url('${baseUrl}images/fondo.png'); background-size: cover; background-attachment: fixed;`"
     role="main"
     aria-label="Diarios de campo"
   >
 
     <!-- Header -->
-    <section class="px-4 py-5 text-center">
-      <h1 class="fw-bold mb-3" style="font-size: clamp(2rem, 5vw, 3rem); color: var(--color-dark);">Diarios de campo</h1>
-      <p class="mx-auto" style="color: #333; max-width: 36rem; line-height: 1.75;">
+    <section class="diarios-heading">
+      <h1 class="fw-medium mb-3" style="font-size: clamp(2rem, 5vw, 3rem); color: var(--color-dark);">Diarios de campo</h1>
+      <p class="page-subtitle" style="color: #333; max-width: 36rem; line-height: 1.75;">
         Registros visuales del trabajo en terreno. Pasa el cursor sobre cada imagen para explorarla.
       </p>
     </section>
@@ -133,6 +133,16 @@ const {
 </script>
 
 <style scoped>
+.diarios-heading {
+  margin-left: 164px;
+  margin-right: 1.5rem;
+  padding-bottom: 4rem;
+}
+@media (max-width: 575.98px) {
+  .diarios-heading { margin-left: 164px; }
+  .diarios-heading h1 { font-size: 1.6rem !important; }
+  .diarios-heading p { font-size: 1rem; }
+}
 .lightbox-btn {
   color: rgba(252,248,237,0.6);
   transition: color 0.2s;

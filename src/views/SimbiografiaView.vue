@@ -16,7 +16,7 @@
 
       <div class="simbiografia-heading">
         <h1 class="simbiografia-title">Simbiosis</h1>
-        <h3>Líquenes</h3>
+        <h3 class="page-subtitle">Líquenes</h3>
       </div>
 
       <a 
@@ -267,14 +267,14 @@ function scrollTo(id) {
   position: absolute;
   z-index: 2;
   top: clamp(2rem, 2vw, 3.25rem);
-  left: clamp(12rem, 14.7vw, 18rem);
+  left: calc(clamp(1.4rem, 2vw, 2.4rem) + 140px);
   color: var(--color-cream);
 }
 
 .simbiografia-heading h1 {
   color: var(--color-lime);
   font-size: clamp(2.5rem, 2.5vw, 5.1rem);
-  font-weight: 300;
+  font-weight: 500;
   line-height: 0.98;
   margin: 0 0 0.35rem;
 }
@@ -298,7 +298,7 @@ function scrollTo(id) {
   border-radius: clamp(1.8rem, 2.8vw, 3.4rem);
   color: var(--color-cream);
   background: #aabc51;
-  font-size: clamp(2.0rem, 4.7vw, 5.0rem);
+  font-size: 56px;
   font-weight: 300;
   line-height: 1;
   text-decoration: none;
@@ -561,8 +561,8 @@ function scrollTo(id) {
     min-height: 100svh;
     background-position: 53% center;
   }
-  .simbiografia-logo-link { top: 5.25rem; left: 1.25rem; width: 7rem; }
-  .simbiografia-heading   { top: 5.2rem;  left: 9.2rem; }
+  .simbiografia-logo-link { top: 5.25rem; left: 1.25rem; width: 100px; }
+  .simbiografia-heading   { top: 5.2rem; left: calc(1.25rem + 140px); }
   .feature-pill {
     min-height: 4.75rem;
     border-radius: 1.6rem;
@@ -594,7 +594,8 @@ function scrollTo(id) {
     background-position: 54% center;
   }
   .simbiografia-logo-link { top: 4.9rem; width: 5.6rem; }
-  .simbiografia-heading   { top: 5rem;   left: 7.5rem; }
+  .simbiografia-logo { width: 100%; }
+  .simbiografia-heading   { top: 5rem; left: calc(6.85rem + 40px); }
   .simbiografia-heading h1 { font-size: 2.3rem; }
   .simbiografia-heading p  { font-size: 1.35rem; }
   .feature-pill { min-height: 3.8rem; padding-inline: 1.4rem; border-radius: 1.25rem; }
@@ -627,7 +628,7 @@ function scrollTo(id) {
 
 @media (max-width: 390px) {
   .simbiografia-logo-link { top: 4.7rem; width: 4.8rem; }
-  .simbiografia-heading   { left: 6.5rem; }
+  .simbiografia-heading   { left: calc(6.05rem + 40px); }
   .simbiografia-heading h1 { font-size: 1.95rem; }
   .simbiografia-heading p  { font-size: 1.15rem; }
   .feature-pill { min-height: 3.25rem; font-size: 1.85rem; }
