@@ -10,14 +10,18 @@
     <button 
       class="audio-toggle" 
       @click="toggleMute" 
+      :disabled="isStarting"
+      :aria-busy="isStarting"
+      :aria-describedby="audioError ? 'home-audio-error' : undefined"
       :class="{ active: !isMuted }"
       :aria-label="isMuted ? 'Activar sonido ambiental' : 'Silenciar sonido ambiental'"
       :aria-pressed="!isMuted"
     >
       <span class="audio-icon" aria-hidden="true">{{ isMuted ? '♪' : '♫' }}</span>
-      <span class="audio-label">{{ isMuted ? 'Activar sonido' : 'Silenciar' }}</span>
+      <span class="audio-label">{{ isStarting ? 'Cargando sonido…' : isMuted ? 'Activar sonido' : 'Silenciar' }}</span>
       <span v-if="isMuted" class="audio-hint" aria-hidden="true">· mejor experiencia</span>
     </button>
+    <p v-if="audioError" id="home-audio-error" class="audio-error" role="alert">{{ audioError }}</p>
 
     <!-- Hotspot: Memorias (arriba derecha del modelo) -->
     <RouterLink 
@@ -123,7 +127,7 @@ import audioFile from '@/assets/audio/sonoro.opus?url'
 const mainModel = liquen1Model
 
 const { progress, isLoaded, onProgress, onLoad, onError } = useModelLoader()
-const { isMuted, toggleMute, init: initAudio, play: playAudio } = useAudio(audioFile)
+const { isMuted, isStarting, error: audioError, toggleMute } = useAudio(audioFile)
 
 onMounted(() => {
   if (!customElements.get('model-viewer')) {
@@ -133,12 +137,25 @@ onMounted(() => {
     document.head.appendChild(script)
   }
   
-  initAudio()
-  playAudio()
 })
 </script>
 
 <style scoped>
+.audio-error {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 5rem;
+  z-index: 100;
+  width: min(360px, calc(100% - 3rem));
+  padding: 12px;
+  background: var(--color-cream);
+  color: var(--color-dark);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+@media (max-width: 1024px), (max-height: 600px) {
+  .audio-error { position: static; grid-column: 1 / -1; width: 100%; margin: 0; }
+}
 .home-stage {
   position: fixed;
   inset: 0;

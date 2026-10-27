@@ -97,7 +97,7 @@
           :aria-label="`Ver fotografía ${index + 1} de ${photos.length} en pantalla completa`"
         >
           <img
-            :src="`${baseUrl}images/fotografias/${photo}.jpg`"
+            :src="galleryImages[index].src"
             :alt="`Fotografía de líquen ${index + 1} de ${photos.length}`"
             loading="lazy"
           />
@@ -155,7 +155,7 @@ const photos = [
   '73', '74', '75', '76', '77', '78', '79', '80', '81', '82',
   '83', '84', '85', '86', '87', '88', '89', '90', '91', '92',
   '93', '94', '95', '96', '97', '98', '99', '100','101','102',
-  '103','104',
+  '103','104', 'foto3.png', 'foto4.png',
 ]
 
 const {

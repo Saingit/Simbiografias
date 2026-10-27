@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v2'
+const CACHE_VERSION = 'v6'
 const CACHE_NAME = `simbiografias-${CACHE_VERSION}`
 const STATIC_CACHE = `simbiografias-static-${CACHE_VERSION}`
 const MODEL_CACHE = `simbiografias-models-${CACHE_VERSION}`
@@ -8,7 +8,7 @@ const STATIC_ASSETS = [
   '/simbiografias/',
   '/simbiografias/index.html',
   '/simbiografias/manifest.json',
-  '/simbiografias/icons/icon-512x512.svg',
+  '/simbiografias/favicon-simbiografias.png?v=1',
   '/simbiografias/fonts/Poppins-Regular.ttf',
   '/simbiografias/fonts/Poppins-Medium.ttf',
   '/simbiografias/fonts/Poppins-SemiBold.ttf',
@@ -47,6 +47,14 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url)
 
   if (request.method !== 'GET') return
+
+  // El navegador debe obtener el favicon actualizado directamente de la red.
+  if (url.pathname.endsWith('/favicon-simbiografias.svg') ||
+      url.pathname.endsWith('/favicon-simbiografias.png')) return
+
+  // El navegador gestiona los rangos de audio/video; Cache.put no admite respuestas 206.
+  if (request.headers.has('range') || request.destination === 'audio' ||
+      request.destination === 'video' || /\.(opus|ogg|mp3|m4a|wav|mp4|webm)$/i.test(url.pathname)) return
 
   if (url.pathname.endsWith('.glb') || url.pathname.endsWith('.gltf')) {
     event.respondWith(

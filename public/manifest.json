@@ -12,66 +12,10 @@
   "categories": ["art", "education", "science"],
   "icons": [
     {
-      "src": "/simbiografias/icons/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "/simbiografias/icons/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "/simbiografias/icons/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "/simbiografias/icons/icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "/simbiografias/icons/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "/simbiografias/icons/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "/simbiografias/icons/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "/simbiografias/icons/icon-512x512.png",
+      "src": "/simbiografias/favicon-simbiografias.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable any"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "/simbiografias/screenshots/desktop.png",
-      "sizes": "1920x1080",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/simbiografias/screenshots/mobile.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow"
+      "purpose": "any"
     }
   ],
   "shortcuts": [
@@ -79,22 +23,19 @@
       "name": "Explorar Líquenes",
       "short_name": "Líquenes",
       "description": "Explora modelos 3D de diferentes especies de líquenes",
-      "url": "/simbiografias/#/liquenes",
-      "icons": [{ "src": "/simbiografias/icons/shortcut-liquenes.png", "sizes": "96x96" }]
+      "url": "/simbiografias/#/liquenes"
     },
     {
       "name": "Simbiosis",
       "short_name": "Simbiosis",
       "description": "Descubre el concepto de simbiosis en líquenes",
-      "url": "/simbiografias/#/simbiosis",
-      "icons": [{ "src": "/simbiografias/icons/shortcut-simbiosis.png", "sizes": "96x96" }]
+      "url": "/simbiografias/#/simbiosis"
     },
     {
       "name": "Cartografías",
       "short_name": "Cartografías",
       "description": "Explora los diarios de campo y mapas",
-      "url": "/simbiografias/#/cartografias",
-      "icons": [{ "src": "/simbiografias/icons/shortcut-cartografias.png", "sizes": "96x96" }]
+      "url": "/simbiografias/#/cartografias"
     }
   ]
 }

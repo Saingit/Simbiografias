@@ -1,8 +1,17 @@
+<IfModule mod_mime.c>
+  # sonoro.opus contiene audio Opus encapsulado en Ogg.
+  AddType audio/ogg .opus .ogg .oga
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /
+  RewriteBase /simbiografias/
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  # No devolver HTML cuando falta un recurso (audio, imagen, JS, etc.).
+  RewriteRule ^assets/ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /simbiografias/index.html [L]
 </IfModule>

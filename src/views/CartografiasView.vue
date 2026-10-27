@@ -144,7 +144,7 @@ const locations = [
     name: 'Vereda el Tambo',
     x: '58%', y: '38%',
     entries: [
-      { id: 'vt-01', label: '26 de enero de 2025', pages: [] },
+      { id: 'vt-01', label: '26 de enero de 2024', pages: ['03. El tambo/260102024'] },
     ],
   },
   {
@@ -152,7 +152,7 @@ const locations = [
     name: 'Vereda la Ilusión',
     x: '70%', y: '65%',
     entries: [
-      { id: 'vi-01', label: '26 de enero de 2025', pages: [] },
+      { id: 'vi-01', label: '26 de enero de 2024', pages: ['04. La Ilusion/260102024', '04. La Ilusion/260102024_2'] },
     ],
   },
   {
@@ -162,12 +162,12 @@ const locations = [
     entries: [
       { id: 'mc-01', label: '23 de marzo de 2024',     pages: ['05. Museo/23032024'] },
       { id: 'mc-02', label: '27 de agosto de 2024',    pages: ['05. Museo/27082024'] },
-      { id: 'mc-03', label: '18 de diciembre de 2024', pages: [] },
-      { id: 'mc-04', label: '27 de enero de 2025',     pages: [] },
-      { id: 'mc-05', label: '5 de febrero de 2025',    pages: [] },
-      { id: 'mc-06', label: '11 de febrero de 2025',   pages: [] },
-      { id: 'mc-07', label: '29 de marzo de 2025',     pages: [] },
-      { id: 'mc-08', label: '2 de mayo de 2025',       pages: [] },
+      { id: 'mc-03', label: '18 de diciembre de 2024', pages: ['05. Museo/18122024/18122024_1', '05. Museo/18122024/18122024_2'] },
+      { id: 'mc-04', label: '27 de enero de 2025',     pages: ['05. Museo/27012025/27012025_1', '05. Museo/27012025/27012025_2'] },
+      { id: 'mc-05', label: '5 de febrero de 2025',    pages: ['05. Museo/05022025'] },
+      { id: 'mc-06', label: '11 de febrero de 2025',   pages: ['05. Museo/11022025'] },
+      { id: 'mc-07', label: '29 de marzo de 2025',     pages: ['05. Museo/29032025/29032025-01', '05. Museo/29032025/29032025_02'] },
+      { id: 'mc-08', label: '2 de mayo de 2025',       pages: ['05. Museo/02052025/29032025-01', '05. Museo/02052025/29032025-02'] },
     ],
   },
 ]

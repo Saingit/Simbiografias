@@ -7,7 +7,7 @@ export function usePhotoGallery(photos, baseUrl = '') {
 
   const galleryImages = computed(() => {
     return photos.map((photo, index) => ({
-      src: `${baseUrl}images/fotografias/${photo}.jpg`,
+      src: `${baseUrl}images/fotografias/${/\.[a-z0-9]+$/i.test(photo) ? photo : `${photo}.jpg`}`,
       alt: `Fotografía de líquen ${index + 1} de ${photos.length}`,
       id: photo
     }))
